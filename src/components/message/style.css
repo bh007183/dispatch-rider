@@ -34,3 +34,7 @@
     text-align: left;
     word-wrap: break-word;
 }
+.button{
+    all: unset;
+    cursor: pointer;
+}

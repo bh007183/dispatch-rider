@@ -40,7 +40,7 @@ export default function Header() {
     <div className={styles.root}>
         
       <AppBar position="static">
-      <Grid container xs={12}>
+      <Grid container >
           <Grid item xs={2}>
         <Button
           aria-controls="simple-menu"

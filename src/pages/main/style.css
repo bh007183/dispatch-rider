@@ -1,0 +1,30 @@
+.participants{
+    background: rgba(18, 20, 18, 0.9);
+    height: 70px
+}
+
+.foundationPar{
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+.profileImgPar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(13, 14, 13, 0.7);
+}
+.midlayerPar{
+    border-radius: 100%;
+    background: url("http://placekitten.com/g/200/300");
+    background-position: center;
+    background-size: contain;
+    width: 50px;
+    height: 50px;
+  
+}

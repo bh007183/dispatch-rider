@@ -82,6 +82,7 @@ export default function CreateAccount() {
         <Grid container className="subContain">
           <Grid item xs={6}>
             <input
+            type="password"
               onChange={handleChange}
               placeholder="Password"
               name="initialPassword"
@@ -90,6 +91,7 @@ export default function CreateAccount() {
           </Grid>
           <Grid item xs={6}>
             <input
+            type="password"
               onChange={handleChange}
               placeholder="Verify Password"
               name="password"

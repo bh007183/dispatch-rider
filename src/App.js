@@ -11,11 +11,24 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import React, { useState, useMemo } from "react";
+import {GlobalContext} from "./globalContext"
 
 function App() {
+
+  const [global, setGlobal] = useState({
+
+    friends: [],
+    online: []
+
+  })
+
+  const memo = useMemo(() => ({global, setGlobal}), [global, setGlobal])
+
   return (
     <div className="App">
       <Container className="container" style={{ padding: "0px" }} maxWidth="xs">
+      <GlobalContext.Provider value={memo}>
         <Header />
         <Router>
           <Switch>
@@ -30,6 +43,7 @@ function App() {
         </Route>
         </Switch>
         </Router>
+        </GlobalContext.Provider>
       </Container>
     </div>
   );

@@ -16,7 +16,10 @@ export default function Main() {
                 headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
               }).then(res => setGlobal({...global, friends: res.data}))
     }, [])
-
+    const clickermiclicking = event => {
+        event.stopPropagation()
+        console.log(event.currentTarget.attributes[0].value)
+    }
 
   
 
@@ -25,19 +28,35 @@ export default function Main() {
       <Grid className="participants" container>
         {global.friends.map((friend) =>
           friend.isOnline ? (
-            <Grid item className={"profileImgPar"} xs={2}>
-              <div style={{backgroundColor: "green"}} className={"foundationPar"}>
+            
+            <Grid item className={"profileImgPar"} xs={3}>
+              <div className="button" value={friend.id} onClick={clickermiclicking} >
+              <div xs={12} style={{backgroundColor: "green"}} className={"foundationPar"}>
                 <div className={"midlayerPar"}></div>
+                
+                
               </div>
+              <h6 className="name" direction='column' item xs={12}>{friend.firstName}</h6>
               
-            </Grid>
-          ) : (
-            <Grid item className={"profileImgPar"} xs={2}>
-              <div style={{backgroundColor: "red"}} className={"foundationPar"}>
-                <div className={"midlayerPar"}></div>
               </div>
-             
-            </Grid>
+              </Grid>
+            
+          ) : (
+           
+            <Grid  item className={"profileImgPar"} xs={3}>
+              <div className="button" value={friend.id} onClick={clickermiclicking} >
+              <div xs={12} style={{backgroundColor: "red"}} className={"foundationPar"}>
+                <div className={"midlayerPar"}></div>
+                
+                
+              </div>
+              <h6 className="name" direction='column' item xs={12}>{friend.firstName}</h6>
+              
+              </div>
+              </Grid>
+           
+          
+        
           )
         )}
       </Grid>

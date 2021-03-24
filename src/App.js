@@ -13,13 +13,15 @@ import {
 } from "react-router-dom";
 import React, { useState, useMemo } from "react";
 import {GlobalContext} from "./globalContext"
+import Conversation from "./pages/conversation"
 
 function App() {
 
   const [global, setGlobal] = useState({
 
     friends: [],
-    online: []
+    participants: [],
+    message: ""
 
   })
 
@@ -40,6 +42,9 @@ function App() {
         </Route>
         <Route exact path="/create">
         <CreateAccount/>
+        </Route>
+        <Route exact path="/conversation">
+        <Conversation/>
         </Route>
         </Switch>
         </Router>

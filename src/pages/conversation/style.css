@@ -1,0 +1,26 @@
+.messageInput{
+    resize: none;
+    height: auto;
+    width: 80%;
+    border-radius: 5px;
+    border: hidden;
+
+   
+}
+
+.bottomNav{
+    display: flex;
+    align-items: center;
+    background-color: #333;
+  /* overflow: hidden; */
+  position: absolute;
+  bottom: 0;
+
+ height:8%;
+  max-width: 444px
+
+  
+    
+ 
+  
+}

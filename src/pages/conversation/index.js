@@ -17,17 +17,17 @@ export default function Conversation() {
   useEffect(() => {
       const ws = new WebSocket('ws://localhost:3030');
       ws.onopen = () => {
-        axios
-        .get(
-          `http://localhost:8080/conversation/specific/${global.participants}`,
-          {
-            headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
-          }
-        )
-        .then((res) => setGlobal({ ...global, messages: res.data }))
-        .catch((err) => console.error(err));
+          console.log("conected")
       }
-    
+    axios
+      .get(
+        `http://localhost:8080/conversation/specific/${global.participants}`,
+        {
+          headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
+        }
+      )
+      .then((res) => setGlobal({ ...global, messages: res.data }))
+      .catch((err) => console.error(err));
   }, []);
 
   const handleChange = (event) => {

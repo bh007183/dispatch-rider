@@ -18,9 +18,7 @@ export default function Main() {
               }).then(res => setGlobal({...global, friends: res.data}))
     }, [])
     const clickermiclicking = event => {
-        event.stopPropagation()
-        console.log(event.currentTarget.attributes[1].value)
-        setGlobal({...global, participants: [event.currentTarget.attributes[1].value]})
+        setGlobal({...global, participants: [event.currentTarget.attributes[1].value, localStorage.getItem("UserId")]})
 
     }
 

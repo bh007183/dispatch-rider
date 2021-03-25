@@ -14,7 +14,7 @@ function App() {
   const [global, setGlobal] = useState({
     friends: [],
     participants: [],
-    message: "",
+    messages: [],
   });
 
   const memo = useMemo(() => ({ global, setGlobal }), [global, setGlobal]);

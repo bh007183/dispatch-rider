@@ -28,7 +28,8 @@ export default function Login() {
      axios.post("http://localhost:8080/login", login)
      .then((res) => {
          localStorage.setItem("Auth", res.data.auth);
-        //  setGlobal({...global, friends: res.data.friends});
+         localStorage.setItem("UserId", res.data.id);
+        
         window.location.href = "/main"
         
          

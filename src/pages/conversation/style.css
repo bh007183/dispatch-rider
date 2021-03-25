@@ -24,3 +24,11 @@
  
   
 }
+
+.messageContainer{
+    margin-top: 10px;
+    background:  rgba(13, 14, 13, 0.7);
+    color: white;
+    border-radius: 30%;
+    min-height: 30px;
+}

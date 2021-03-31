@@ -20,11 +20,11 @@ export default function Conversation() {
   });
 
   useEffect(() => {
-      const ws = new WebSocket('ws://localhost:3030');
-      ws.onopen = () => {
-          console.log("conected")
-      }
-    axios
+    const ws = new WebSocket('ws://localhost:3030');
+        ws.onopen = () => {
+          console.log("connected")
+      }    
+      axios
       .get(
         `http://localhost:8080/conversation/specific/${global.participants}`,
         {
@@ -33,11 +33,11 @@ export default function Conversation() {
       )
       .then((res) => {
         setGlobal({ ...global, messages: res.data });
-        scrollToBottom()})
+        scrollToBottom();
+      })
       .catch((err) => console.error(err));
-      
-      
   }, [global.messages.length]);
+
 
   const handleChange = (event) => {
     let name = event.target.name;

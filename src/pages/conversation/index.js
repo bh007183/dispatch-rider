@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { GlobalContext } from "../../globalContext";
 import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,11 @@ import "./style.css";
 
 export default function Conversation() {
   const { global, setGlobal } = useContext(GlobalContext);
+
+  const messagesEndRef = useRef(null)
+  const scrollToBottom = () => {
+   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+ }
 
   const [sendMessage, setSendMessage] = useState({
     message: "",
@@ -26,9 +31,13 @@ export default function Conversation() {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
       )
-      .then((res) => setGlobal({ ...global, messages: res.data }))
+      .then((res) => {
+        setGlobal({ ...global, messages: res.data });
+        scrollToBottom()})
       .catch((err) => console.error(err));
-  }, []);
+      
+      
+  }, [global.messages.length]);
 
   const handleChange = (event) => {
     let name = event.target.name;
@@ -53,7 +62,8 @@ export default function Conversation() {
         window.location.href = "/";
       });
   };
-  //    setGlobal({...global, messages: res.data}
+
+
   return (
     <>
       <Grid className="participants" container>
@@ -70,10 +80,10 @@ export default function Conversation() {
           </div>
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container className="mainMessageContainer">
         {global.messages.map((mess) =>
           mess.author === parseInt(localStorage.getItem("UserId")) ? (
-            <Grid className="messageContainer" container>
+            <Grid className="messageSubContainer" container>
               <Grid style={{ opacity: ".1" }} item xs={2}></Grid>
               <Grid item xs={8}>
                 {mess.message}
@@ -92,6 +102,8 @@ export default function Conversation() {
             </Grid>
           )
         )}
+        <div ref={messagesEndRef} />
+       
       </Grid>
 
       <Grid container className="bottomNav">

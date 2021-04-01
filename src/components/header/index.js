@@ -7,6 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid"
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import {Link} from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,13 +28,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const styles = useStyles();
-  const [buttonAction, setButtonAction] = useState(null);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
-    setButtonAction(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   };
-  const close = (event) => {
-    setButtonAction(null);
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -42,25 +45,23 @@ export default function Header() {
       <AppBar position="static">
       <Grid container >
           <Grid item xs={2}>
-        <Button
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <AccountCircleIcon />
-        </Button>
+       
+        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <AccountCircleIcon />
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <Link to="/AddFriends"><MenuItem onClick={handleClose}>Add Friend</MenuItem></Link>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
         </Grid>
-        <Menu
-          id="simple-menu"
-          buttonAction={buttonAction}
-          keepMounted
-          open={Boolean(buttonAction)}
-          onClose={close}
-        >
-          <MenuItem onClick={close}>Profile</MenuItem>
-          <MenuItem onClick={close}>My account</MenuItem>
-          <MenuItem onClick={close}>Logout</MenuItem>
-        </Menu>
+        
         <Grid item xs={8}>
          <p className={styles.user} >Ben Hopkins</p>
         </Grid>

@@ -19,6 +19,26 @@ export default function Conversation() {
     message: "",
   });
 
+
+
+
+
+///////////////////////////////////////////////////////////
+// When a connection is made
+// socket.onopen = function() {
+//   console.log('Opened connection 🎉');
+
+//   // send data to the server
+//   var json = JSON.stringify({ message: 'Hello 👋' });
+//   socket.send(json);
+// }
+
+// // When data is received
+// socket.onmessage = function(event) {
+//   console.log(event.data);
+// }
+
+/////////////////////////////////////////////////////////////
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:3030');
         ws.onopen = () => {

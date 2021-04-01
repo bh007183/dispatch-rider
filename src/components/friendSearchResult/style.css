@@ -2,8 +2,6 @@
     color: honeydew;
     text-align: left;
     word-wrap: break-word;
-}
-
-.resultsContainer{
-    overflow: scroll;
+    text-align: center;
+    
 }

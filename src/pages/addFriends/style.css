@@ -1,0 +1,15 @@
+.FindFriendInput{
+    width: 80%;
+    height: 85%;
+    
+}
+.FindFriendInputContainer{
+margin-top: 5%;
+margin-bottom: 5%;
+}
+.FindFriendButton{
+    margin: 0%;
+}
+.resultsContainer{
+    overflow: scroll;
+}

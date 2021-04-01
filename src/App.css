@@ -3,8 +3,9 @@
   
 }
 .container{
-  background: url("https://images.pexels.com/photos/957024/forest-trees-perspective-bright-957024.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+  background: url("https://cdn4.vectorstock.com/i/1000x1000/77/58/carbon-fiber-vector-257758.jpg");
   background-size: cover;
+  background-position: center;
  height: 100vh;
 
 }

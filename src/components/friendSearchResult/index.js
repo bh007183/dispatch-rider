@@ -5,11 +5,11 @@ import "./style.css"
 export default function FriendSearchResults(props) {
 
 
-    const clickermiclicking = event => {
+    const addFriend = event => {
         console.log(event.currentTarget.value)
     }
   return (
-    <button value={props.id} style={{width: "100%", marginTop:"2%"}} className="button" onClick={clickermiclicking} >
+    <button value={props.id} style={{width: "100%", marginTop:"2%"}} className="button" onClick={props.addFriend} >
     <Grid container className={"eachMessage"} item >
       <Grid item className={"profileImg"} xs={4}>
         <div className={"foundation"}>

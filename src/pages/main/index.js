@@ -15,8 +15,8 @@ export default function Main() {
     useEffect(() => {
         axios.get("http://localhost:8080/friends", {
                 headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
-              }).then(res => setGlobal({...global, friends: [res.data]}))
-        console.log(global.friends)
+              }).then(res => setGlobal({...global, friends: res.data}))
+        
     }, [])
     const clickermiclicking = event => {
         setGlobal({...global, participants: [event.currentTarget.attributes[1].value, localStorage.getItem("UserId")]})

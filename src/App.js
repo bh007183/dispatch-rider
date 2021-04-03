@@ -16,6 +16,8 @@ function App() {
     friends: [],
     participants: [],
     messages: [],
+    conversations: []
+    
   });
 
   const memo = useMemo(() => ({ global, setGlobal }), [global, setGlobal]);

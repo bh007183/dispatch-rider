@@ -16,6 +16,10 @@ export default function Main() {
         axios.get("http://localhost:8080/friends", {
                 headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
               }).then(res => setGlobal({...global, friends: res.data}))
+        axios.get("http://localhost:8080/conversation", {
+                headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
+              }).then(res => console.log(res))
+              // setGlobal({...global, conversations: res.data})
         
     }, [])
     const clickermiclicking = event => {

@@ -88,6 +88,7 @@ export default function Main() {
           )
         )}
       </div>
+      <div className="conversations">
       {global.conversations.map((group) => (
         <Message
           key={group.participants}
@@ -96,7 +97,9 @@ export default function Main() {
           
           
         />
+        
       ))}
+      </div>
     </>
   );
 }

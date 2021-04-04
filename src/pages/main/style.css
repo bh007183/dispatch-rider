@@ -39,4 +39,8 @@
     margin: 2px;
     color: white
 }
+.conversations{
+    max-height: 80%;
+    overflow: scroll
+}
 

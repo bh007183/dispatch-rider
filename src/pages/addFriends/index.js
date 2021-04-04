@@ -53,8 +53,8 @@ export default function AddFriends() {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) =>
-      console.log(res)
-        // setsearchResults({ ...searchResults, friendSearchResults: res.data })
+      
+        window.location.href = "/main"
       )
       .catch((err) => console.error(err));
   };

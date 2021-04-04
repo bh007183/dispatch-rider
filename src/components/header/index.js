@@ -39,6 +39,12 @@ export default function Header() {
     setAnchorEl(null);
   };
 
+  const logOut = () => {
+    localStorage.clear();
+    handleClose();
+    window.location.href = "/"
+  }
+
   return (
     <div className={styles.root}>
         
@@ -57,8 +63,8 @@ export default function Header() {
         onClose={handleClose}
       >
         <Link to="/AddFriends"><MenuItem onClick={handleClose}>Add Friend</MenuItem></Link>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <Link to="/main"><MenuItem onClick={handleClose}>My account</MenuItem></Link>
+        <MenuItem onClick={logOut}>Logout</MenuItem>
       </Menu>
         </Grid>
         

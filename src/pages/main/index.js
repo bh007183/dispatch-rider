@@ -35,19 +35,17 @@ export default function Main() {
     });
   };
 
-  const otherClick = (event) => {
-    console.log(event.currentTarget)
-  };
+  
 
   return (
     <>
-      <Grid className="participants" container>
+      <div className="participants" container>
         {global.friends.length === 0 ? (
           <></>
         ) : (
           global.friends.map((friend) =>
             friend.isOnline ? (
-              <Grid key={friend.id} item className={"profileImgPar"} xs={3}>
+              <div key={friend.id} className={"profileImgPar"} >
                 <Link
                   to="/conversation"
                   className="button"
@@ -55,19 +53,19 @@ export default function Main() {
                   onClick={clickermiclicking}
                 >
                   <div
-                    xs={12}
+                    
                     style={{ backgroundColor: "green" }}
                     className={"foundationPar"}
                   >
                     <div className={"midlayerPar"}></div>
                   </div>
-                  <h6 className="name" direction="column" item xs={12}>
+                  <h6 className="name" direction="column" >
                     {friend.firstName}
                   </h6>
                 </Link>
-              </Grid>
+              </div>
             ) : (
-              <Grid key={friend.id} item className={"profileImgPar"} xs={3}>
+              <div key={friend.id} className={"profileImgPar"} >
                 <Link
                   to="/conversation"
                   className="button"
@@ -81,20 +79,21 @@ export default function Main() {
                   >
                     <div className={"midlayerPar"}></div>
                   </div>
-                  <h6 className="name" direction="column" item xs={12}>
+                  <h6 className="name" direction="column" item >
                     {friend.firstName}
                   </h6>
                 </Link>
-              </Grid>
+              </div>
             )
           )
         )}
-      </Grid>
+      </div>
       {global.conversations.map((group) => (
         <Message
           key={group.participants}
           message={group.message}
           participants={group.participants}
+          
           
         />
       ))}

@@ -1,6 +1,10 @@
 .participants{
     
-    height: 90px
+   height: 90px;
+   display: flex ;
+   overflow: scroll;
+   contain: content;
+    
 }
 
 .foundationPar{
@@ -17,7 +21,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 2vw;
     background: rgba(13, 14, 13, 0.7);
+    width: 70px;
+    
 }
 .midlayerPar{
     border-radius: 100%;

@@ -10,22 +10,25 @@ import React, { useState, useMemo } from "react";
 import { GlobalContext } from "./globalContext";
 import Conversation from "./pages/conversation";
 import AddFriends from "./pages/addFriends"
+import AddToConversation from "./pages/addToConversation";
 
 function App() {
   const [global, setGlobal] = useState({
     friends: [],
     participants: [],
     messages: [],
-    conversations: []
+    conversations: [],
     
   });
 
   const memo = useMemo(() => ({ global, setGlobal }), [global, setGlobal]);
+  const state = useState(() => ({ global, setGlobal }), [global, setGlobal]);
+
 
   return (
     <div className="App">
       <Container className="container" style={{ padding: "0px" }} maxWidth="xs">
-        <GlobalContext.Provider value={memo}>
+        <GlobalContext.Provider value={{global, setGlobal}}>
         <Router>
           <Header />
           
@@ -44,6 +47,9 @@ function App() {
               </Route>
               <Route exact path="/AddFriends">
                 <AddFriends />
+              </Route>
+              <Route exact path="/addToConversation">
+                <AddToConversation />
               </Route>
             </Switch>
           </Router>

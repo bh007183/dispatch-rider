@@ -6,6 +6,7 @@ import {
   } from "react-router-dom";
 import "./style.css";
 import axios from "axios"
+import Modal from '@material-ui/core/Modal';
 
 
 

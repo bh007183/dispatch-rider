@@ -24,18 +24,24 @@
  
   
 }
-
+.containWords{
+   
+    word-break: inherit;
+    overflow-wrap: break-word;
+     width: 100%;
+}
 .messageSubContainer{
     margin-top: 10px;
     background:  rgba(13, 14, 13, 0.7);
     color: white;
     /* border-radius: 30%; */
-    min-height: 30px;
-    overflow: scroll;
+    
+    
+    
 }
 .mainMessageContainer{
     overflow: scroll;
-    /* contain: content; */
+   
     max-height:69%;
-    scroll-snap-align: end;
+    
 }

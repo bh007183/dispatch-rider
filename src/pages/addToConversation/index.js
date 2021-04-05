@@ -15,7 +15,7 @@ export default function AddToConversation() {
       {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       }
-    );
+    ).then(res => setGlobal({...global, participants: res.data})).catch(err => alert("Something went wrong"));
   };
 
   useEffect(() => {

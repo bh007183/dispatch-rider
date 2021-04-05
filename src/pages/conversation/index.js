@@ -40,10 +40,10 @@ export default function Conversation() {
 
 /////////////////////////////////////////////////////////////
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3030');
-        ws.onopen = () => {
-          console.log("connected")
-      }    
+    // const ws = new WebSocket('ws://localhost:3030');
+    //     ws.onopen = () => {
+    //       console.log("connected")
+    //   }    
       axios
       .get(
         `http://localhost:8080/conversation/specific/${global.participants}`,
@@ -105,7 +105,7 @@ export default function Conversation() {
           mess.author === parseInt(localStorage.getItem("UserId")) ? (
             <Grid className="messageSubContainer" container>
               <Grid style={{ opacity: ".1" }} item xs={2}></Grid>
-              <Grid item xs={8}>
+              <Grid className="containWords" item xs={8}>
                 {mess.message}
               </Grid>
               <Grid item xs={2}></Grid>

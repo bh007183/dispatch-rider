@@ -19,6 +19,10 @@ export default function Conversation() {
     message: "",
   });
 
+  const [participantsData, setParticipantsData] = useState({
+    data: []
+  });
+
 
 
 
@@ -40,10 +44,7 @@ export default function Conversation() {
 
 /////////////////////////////////////////////////////////////
   useEffect(() => {
-    // const ws = new WebSocket('ws://localhost:3030');
-    //     ws.onopen = () => {
-    //       console.log("connected")
-    //   }    
+  
       axios
       .get(
         `http://localhost:8080/conversation/specific/${global.participants}`,
@@ -54,9 +55,25 @@ export default function Conversation() {
       .then((res) => {
         setGlobal({ ...global, messages: res.data });
         scrollToBottom();
+        console.log(res)
       })
       .catch((err) => console.error(err));
   }, [global.messages.length]);
+
+  useEffect(() => {
+  
+      axios
+      .get(
+        `http://localhost:8080/groupconversation/specific/${global.participants}`,
+        {
+          headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
+        }
+      )
+      .then((res) => {
+        setParticipantsData({ data: res.data });
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
 
   const handleChange = (event) => {
@@ -87,18 +104,23 @@ export default function Conversation() {
   return (
     <>
       <Grid className="participants" container>
-        <Grid item className={"profileImgPar"} xs={3}>
-          <div className="button">
-            <div
-              xs={12}
-              style={{ backgroundColor: "green" }}
-              className={"foundationPar"}
-            >
-              <div className={"midlayerPar"}></div>
-            </div>
-            <h6 className="name" direction="column" item xs={12}></h6>
-          </div>
-        </Grid>
+        {participantsData ? participantsData.data.map(friend =>
+            
+              <div key={friend.id} className={"profileImgPar"} >
+                
+                  <div
+                    
+                    style={{ backgroundColor: "green" }}
+                    className={"foundationPar"}
+                  >
+                    <div className={"midlayerPar"}></div>
+                  </div>
+                  <h6 className="name" direction="column" >
+                    {friend.firstName}
+                  </h6>
+                
+              </div>
+         ) : <></>}
       </Grid>
       <Grid container className="mainMessageContainer">
         {global.messages.map((mess) =>

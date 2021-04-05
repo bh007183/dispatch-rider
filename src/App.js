@@ -16,6 +16,7 @@ function App() {
   const [global, setGlobal] = useState({
     friends: [],
     participants: [],
+    participantsData: [],
     messages: [],
     conversations: [],
     

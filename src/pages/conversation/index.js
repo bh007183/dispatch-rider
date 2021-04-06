@@ -6,51 +6,41 @@ import SendIcon from "@material-ui/icons/Send";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import "./style.css";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import IconButton from '@material-ui/core/IconButton';
-
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import IconButton from "@material-ui/core/IconButton";
 
 export default function Conversation() {
   const { global, setGlobal } = useContext(GlobalContext);
 
-  const messagesEndRef = useRef(null)
+  const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
-   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
- }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const [sendMessage, setSendMessage] = useState({
     message: "",
   });
 
   const [participantsData, setParticipantsData] = useState({
-    data: []
+    data: [],
   });
 
-
-
-
-
-///////////////////////////////////////////////////////////
-// When a connection is made
-// socket.onopen = function() {
-//   console.log('Opened connection 🎉');
-
-//   // send data to the server
-//   var json = JSON.stringify({ message: 'Hello 👋' });
-//   socket.send(json);
-// }
-
-// // When data is received
-// socket.onmessage = function(event) {
-//   console.log(event.data);
-// }
-
-/////////////////////////////////////////////////////////////
-  useEffect(() => {
   
-      axios
+
+  ///////////////////////////////////////////////////////////
+  const exampleSocket = new WebSocket("ws://localhost:3030");
+  /////////////////////////////////////////////////////////////
+  useEffect(() => {
+    
+    
+    
+    // exampleSocket.onopen = function (event) {
+    //   exampleSocket.send("Here's some text that the server is urgently awaiting!");
+    // };
+
+    axios
       .get(
-        `http://localhost:8080/conversation/specific/${global.participants}`,
+        `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -58,16 +48,15 @@ export default function Conversation() {
       .then((res) => {
         setGlobal({ ...global, messages: res.data });
         scrollToBottom();
-        console.log(res)
+        console.log(res);
       })
       .catch((err) => console.error(err));
   }, [global.messages.length]);
 
   useEffect(() => {
-  
-      axios
+    axios
       .get(
-        `http://localhost:8080/groupconversation/specific/${global.participants}`,
+        `https://dispatch-rider-back.herokuapp.com/groupconversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -78,10 +67,10 @@ export default function Conversation() {
       .catch((err) => console.error(err));
   }, []);
 
-
   const handleChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
+    
     setSendMessage({ ...sendMessage, [name]: value });
   };
 
@@ -91,12 +80,20 @@ export default function Conversation() {
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
+    exampleSocket.send(JSON.stringify(data));
+    exampleSocket.onmessage = (event) => {
+      let newArr = [...global.messages]
+      newArr.push(JSON.parse(event.data))
+      setGlobal({ ...global, messages: newArr })
+
+    }
     event.preventDefault();
     axios
-      .post("http://localhost:8080/sendMessage", data, {
+      .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
-      .then((res) => setGlobal({ ...global, messages: res.data }))
+      .then((res) => console.log(res))
+      // setGlobal({ ...global, messages: res.data })
       .catch((err) => {
         alert("Session Expired! Please Login.");
         window.location.href = "/";
@@ -104,35 +101,41 @@ export default function Conversation() {
   };
 
   const deleteButton = (event) => {
-    axios.delete("http://localhost:8080/deleteMessage/" + event.currentTarget.attributes[3].value, {
-      headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
-    }).then(res => console.log(res))
-    
-  }
-
+    axios
+      .delete(
+        "https://dispatch-rider-back.herokuapp.com/deleteMessage/" +
+          event.currentTarget.attributes[3].value,
+        {
+          headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
+        }
+      )
+      .then((res) => console.log(res));
+  };
 
   return (
     <>
       <div className="participants" container>
-        {participantsData ? participantsData.data.map(friend =>
-            
-              <Grid container key={friend.id} className={"profileImgPar"} >
-                
-                  <div item xs={12}
-                    
-                    style={{ backgroundColor: "green" }}
-                    className={"foundationPar"}
-                  >
-                    <div className={"midlayerPar"}></div>
-                  </div>
-                  <Grid item xs={12}>
-                  <h6 className="name" direction="column" >
-                    {friend.firstName}
-                  </h6>
-                  </Grid>
-                
+        {participantsData ? (
+          participantsData.data.map((friend) => (
+            <Grid container key={friend.id} className={"profileImgPar"}>
+              <div
+                item
+                xs={12}
+                style={{ backgroundColor: "green" }}
+                className={"foundationPar"}
+              >
+                <div className={"midlayerPar"}></div>
+              </div>
+              <Grid item xs={12}>
+                <h6 className="name" direction="column">
+                  {friend.firstName}
+                </h6>
               </Grid>
-         ) : <></>}
+            </Grid>
+          ))
+        ) : (
+          <></>
+        )}
       </div>
       <Grid container className="mainMessageContainer">
         {global.messages.map((mess, index) =>
@@ -144,12 +147,12 @@ export default function Conversation() {
               </Grid>
               <Grid item xs={2}>
                 <IconButton value={mess.id} onClick={deleteButton}>
-                  <DeleteForeverIcon style={{color: "white"}}/>
+                  <DeleteForeverIcon style={{ color: "white" }} />
                 </IconButton>
               </Grid>
             </Grid>
           ) : (
-            <Grid  key={index} className="messageContainer" container>
+            <Grid key={index} className="messageContainer" container>
               <Grid style={{ opacity: ".1" }} item xs={2}></Grid>
               <Grid item xs={8}>
                 {mess.message}
@@ -161,7 +164,6 @@ export default function Conversation() {
           )
         )}
         <div ref={messagesEndRef} />
-       
       </Grid>
 
       <Grid container className="bottomNav">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -9,6 +9,9 @@ import AddIcon from "@material-ui/icons/Add";
 import Grid from "@material-ui/core/Grid";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
+import UnsubscribeIcon from '@material-ui/icons/Unsubscribe';
+import axios from "axios";
+import { GlobalContext } from "../../globalContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header() {
+  const { global, setGlobal } = useContext(GlobalContext);
   const styles = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,6 +48,16 @@ export default function Header() {
     handleClose();
     window.location.href = "/";
   };
+
+  const Unsubscribe = () => {
+
+    axios.put("http://localhost:8080/unsubscribe", global.participants, {
+      headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
+    }).then(res => res.data === "Success" ? window.location.href = "/main" : alert("somthings amis"))
+    .catch(err => console.log(err))
+
+  }
+
 
   return (
     <div className={styles.root}>
@@ -74,16 +88,21 @@ export default function Header() {
             </Menu>
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={7}>
             <p className={styles.user}>Ben Hopkins</p>
           </Grid>
-          <Grid item className="rightButton" xs={2}>
+          <Grid item className="rightButton" xs={3}>
             {window.location.pathname === "/conversation" ? 
+            <>
+            <IconButton onClick={Unsubscribe}>
+              <UnsubscribeIcon />
+            </IconButton>
               <Link to="/addToConversation">
             <IconButton >
               <AddIcon />
             </IconButton>
             </Link>
+            </>
             : 
             window.location.pathname === "/addToConversation" ? 
            

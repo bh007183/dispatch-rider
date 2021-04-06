@@ -6,6 +6,9 @@ import SendIcon from "@material-ui/icons/Send";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import "./style.css";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import IconButton from '@material-ui/core/IconButton';
+
 
 export default function Conversation() {
   const { global, setGlobal } = useContext(GlobalContext);
@@ -100,40 +103,53 @@ export default function Conversation() {
       });
   };
 
+  const deleteButton = (event) => {
+    axios.delete("http://localhost:8080/deleteMessage/" + event.currentTarget.attributes[3].value, {
+      headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
+    }).then(res => console.log(res))
+    
+  }
+
 
   return (
     <>
-      <Grid className="participants" container>
+      <div className="participants" container>
         {participantsData ? participantsData.data.map(friend =>
             
-              <div key={friend.id} className={"profileImgPar"} >
+              <Grid container key={friend.id} className={"profileImgPar"} >
                 
-                  <div
+                  <div item xs={12}
                     
                     style={{ backgroundColor: "green" }}
                     className={"foundationPar"}
                   >
                     <div className={"midlayerPar"}></div>
                   </div>
+                  <Grid item xs={12}>
                   <h6 className="name" direction="column" >
                     {friend.firstName}
                   </h6>
+                  </Grid>
                 
-              </div>
+              </Grid>
          ) : <></>}
-      </Grid>
+      </div>
       <Grid container className="mainMessageContainer">
-        {global.messages.map((mess) =>
+        {global.messages.map((mess, index) =>
           mess.author === parseInt(localStorage.getItem("UserId")) ? (
-            <Grid className="messageSubContainer" container>
+            <Grid key={index} className="messageSubContainer" container>
               <Grid style={{ opacity: ".1" }} item xs={2}></Grid>
               <Grid className="containWords" item xs={8}>
                 {mess.message}
               </Grid>
-              <Grid item xs={2}></Grid>
+              <Grid item xs={2}>
+                <IconButton value={mess.id} onClick={deleteButton}>
+                  <DeleteForeverIcon style={{color: "white"}}/>
+                </IconButton>
+              </Grid>
             </Grid>
           ) : (
-            <Grid className="messageContainer" container>
+            <Grid  key={index} className="messageContainer" container>
               <Grid style={{ opacity: ".1" }} item xs={2}></Grid>
               <Grid item xs={8}>
                 {mess.message}

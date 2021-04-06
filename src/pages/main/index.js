@@ -89,7 +89,7 @@ export default function Main() {
         )}
       </div>
       <div className="conversations">
-      {global.conversations.map((group) => (
+      {global.conversations.length > 0 ? global.conversations.map((group) => (
         <Message
           key={group.participants}
           message={group.message}
@@ -98,7 +98,7 @@ export default function Main() {
           
         />
         
-      ))}
+      )): <p style={{color:"white"}}>You Are not apart of any conversations at this time. To Start a conversation, tap on a friend. To start a group conversation tap on one friend then hit the plus button in the top right corner to add more friends.</p>}
       </div>
     </>
   );

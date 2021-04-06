@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import { GlobalContext } from "../../globalContext";
 import "./style.css";
 import { Link } from "react-router-dom";
+import { IconButton } from "@material-ui/core";
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
 export default function Message(props) {
   const { global, setGlobal } = useContext(GlobalContext);
@@ -12,6 +14,10 @@ export default function Message(props) {
       setGlobal({...global, participants: JSON.parse(event.currentTarget.attributes[0].value)})
 
  
+  }
+
+  const unsubScribe = (event) => {
+    console.log(event.currentTarget.attributes)
   }
   return (
     <Link
@@ -31,6 +37,7 @@ export default function Message(props) {
         <Grid className="recent" item xs={8}>
           {props.message}
         </Grid>
+        
       </Grid>
     </Link>
   );

@@ -50,7 +50,7 @@ export default function Conversation() {
   
       axios
       .get(
-        `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
+        `http://localhost:8080/conversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -67,7 +67,7 @@ export default function Conversation() {
   
       axios
       .get(
-        `https://dispatch-rider-back.herokuapp.com/groupconversation/specific/${global.participants}`,
+        `http://localhost:8080/groupconversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -93,7 +93,7 @@ export default function Conversation() {
     };
     event.preventDefault();
     axios
-      .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {
+      .post("http://localhost:8080/sendMessage", data, {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) => setGlobal({ ...global, messages: res.data }))
@@ -104,7 +104,7 @@ export default function Conversation() {
   };
 
   const deleteButton = (event) => {
-    axios.delete("https://dispatch-rider-back.herokuapp.com/deleteMessage/" + event.currentTarget.attributes[3].value, {
+    axios.delete("http://localhost:8080/deleteMessage/" + event.currentTarget.attributes[3].value, {
       headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
     }).then(res => console.log(res))
     

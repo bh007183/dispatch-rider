@@ -28,9 +28,8 @@ export default function Conversation() {
   
 
   ///////////////////////////////////////////////////////////
-  var HOST = window.location.origin.replace(/^http/, 'ws')
-  console.log(HOST)
-var ws = new WebSocket(HOST);
+  
+var ws = new WebSocket("ws://dispatch-rider-back.herokuapp.com/");
   /////////////////////////////////////////////////////////////
   useEffect(() => {
     

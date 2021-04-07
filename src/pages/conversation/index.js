@@ -25,14 +25,17 @@ export default function Conversation() {
     data: [],
   });
 
-  
+  const ws = new WebSocket("ws://localhost:8080/test")
+    ws.onopen = function (event) {
+        ws.send("hello");
+        
+      }
 
   ///////////////////////////////////////////////////////////
+
   
-var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
   /////////////////////////////////////////////////////////////
   useEffect(() => {
-
     axios
       .get(
         `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
@@ -49,6 +52,7 @@ var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
   }, [global.messages.length]);
 
   useEffect(() => {
+    
     axios
       .get(
         `https://dispatch-rider-back.herokuapp.com/groupconversation/specific/${global.participants}`,
@@ -65,7 +69,7 @@ var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
   const handleChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
-    
+
     setSendMessage({ ...sendMessage, [name]: value });
   };
 
@@ -75,16 +79,15 @@ var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-    ws.onopen = function (event) {
+    
       ws.send(JSON.stringify(data));
       ws.onmessage = (event) => {
-      let newArr = [...global.messages]
-      newArr.push(JSON.parse(event.data))
-      setGlobal({ ...global, messages: newArr })
-
-      }
-    };
+        let newArr = [...global.messages];
+        newArr.push(JSON.parse(event.data));
+        setGlobal({ ...global, messages: newArr });
+      };
     
+
     event.preventDefault();
     axios
       .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {

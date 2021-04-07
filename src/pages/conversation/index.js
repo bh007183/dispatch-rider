@@ -25,22 +25,17 @@ export default function Conversation() {
     data: [],
   });
 
-  const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
-    ws.onopen = function (event) {
-        ws.send("hello");
-        
-      }
+  let ws; 
+  
 
   ///////////////////////////////////////////////////////////
 
-  
   /////////////////////////////////////////////////////////////
   useEffect(() => {
-    const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
+    ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test");
     ws.onopen = function (event) {
-        console.log("heellloooooo")
-        
-      }
+      console.log("heellloooooo");
+    };
     axios
       .get(
         `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
@@ -57,7 +52,6 @@ export default function Conversation() {
   }, [global.messages.length]);
 
   useEffect(() => {
-    
     axios
       .get(
         `https://dispatch-rider-back.herokuapp.com/groupconversation/specific/${global.participants}`,
@@ -78,25 +72,22 @@ export default function Conversation() {
     setSendMessage({ ...sendMessage, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     let data = {
       participants: global.participants,
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-    const ws = await new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
-    // await ws.onopen = function (event) {
-    //     console.log("heellloooooo")
-        
-    //   }
-    
-     await ws.send(JSON.stringify(data));
+    // const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test");
+    // ws.onopen = function (event) {
+    //   console.log("heellloooooo");
+      ws.send(JSON.stringify(data));
       ws.onmessage = (event) => {
         let newArr = [...global.messages];
         newArr.push(JSON.parse(event.data));
         setGlobal({ ...global, messages: newArr });
-      };
-    
+      // };
+    };
 
     event.preventDefault();
     axios

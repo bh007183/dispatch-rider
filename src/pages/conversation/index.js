@@ -29,10 +29,9 @@ export default function Conversation() {
 
   ///////////////////////////////////////////////////////////
   
-var ws = new WebSocket("ws://dispatch-rider-back.herokuapp.com/");
+var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
   /////////////////////////////////////////////////////////////
   useEffect(() => {
-    
     
     
     // ws.onopen = function (event) {

@@ -33,9 +33,13 @@ export default function Conversation() {
   /////////////////////////////////////////////////////////////
   useEffect(() => {
     
-    // ws.onopen = function (event) {
-    //   console.log("heellloooooo");
-    // };
+    ws.onopen = function (event) {
+      ws.onmessage = (event) => {
+        let newArr = [...global.messages];
+        newArr.push(JSON.parse(event.data));
+        setGlobal({ ...global, messages: newArr });
+      };
+    };
     axios
       .get(
         `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
@@ -82,11 +86,11 @@ export default function Conversation() {
     ws.onopen = function (event) {
     //   console.log("heellloooooo");
       ws.send(JSON.stringify(data));
-      ws.onmessage = (event) => {
-        let newArr = [...global.messages];
-        newArr.push(JSON.parse(event.data));
-        setGlobal({ ...global, messages: newArr });
-      };
+      // ws.onmessage = (event) => {
+      //   let newArr = [...global.messages];
+      //   newArr.push(JSON.parse(event.data));
+      //   setGlobal({ ...global, messages: newArr });
+      // };
     };
 
     event.preventDefault();

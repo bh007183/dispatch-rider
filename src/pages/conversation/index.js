@@ -32,12 +32,6 @@ export default function Conversation() {
 var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
   /////////////////////////////////////////////////////////////
   useEffect(() => {
-    
-
-    
-    ws.onopen = function (event) {
-      ws.send("Here's some text that the server is urgently awaiting!");
-    };
 
     axios
       .get(
@@ -81,13 +75,16 @@ var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-    ws.send(JSON.stringify(data));
-    ws.onmessage = (event) => {
+    ws.onopen = function (event) {
+      ws.send(JSON.stringify(data));
+      ws.onmessage = (event) => {
       let newArr = [...global.messages]
       newArr.push(JSON.parse(event.data))
       setGlobal({ ...global, messages: newArr })
 
-    }
+      }
+    };
+    
     event.preventDefault();
     axios
       .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {

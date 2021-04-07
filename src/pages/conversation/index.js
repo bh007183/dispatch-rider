@@ -33,9 +33,9 @@ export default function Conversation() {
   /////////////////////////////////////////////////////////////
   useEffect(() => {
     
-    ws.onopen = function (event) {
-      console.log("heellloooooo");
-    };
+    // ws.onopen = function (event) {
+    //   console.log("heellloooooo");
+    // };
     axios
       .get(
         `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,

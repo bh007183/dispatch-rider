@@ -28,14 +28,16 @@ export default function Conversation() {
   
 
   ///////////////////////////////////////////////////////////
-  const exampleSocket = new WebSocket("ws://localhost:3030");
+  var HOST = window.location.origin.replace(/^http/, 'ws')
+  console.log(HOST)
+var ws = new WebSocket(HOST);
   /////////////////////////////////////////////////////////////
   useEffect(() => {
     
     
     
-    // exampleSocket.onopen = function (event) {
-    //   exampleSocket.send("Here's some text that the server is urgently awaiting!");
+    // ws.onopen = function (event) {
+    //   ws.send("Here's some text that the server is urgently awaiting!");
     // };
 
     axios
@@ -80,8 +82,8 @@ export default function Conversation() {
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-    exampleSocket.send(JSON.stringify(data));
-    exampleSocket.onmessage = (event) => {
+    ws.send(JSON.stringify(data));
+    ws.onmessage = (event) => {
       let newArr = [...global.messages]
       newArr.push(JSON.parse(event.data))
       setGlobal({ ...global, messages: newArr })

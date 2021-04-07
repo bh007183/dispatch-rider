@@ -84,7 +84,7 @@ export default function Conversation() {
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-    const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
+    const ws = await new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
     // await ws.onopen = function (event) {
     //     console.log("heellloooooo")
         

@@ -79,14 +79,14 @@ export default function Conversation() {
       author: localStorage.getItem("UserId"),
     };
     // const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test");
-    // ws.onopen = function (event) {
+    ws.onopen = function (event) {
     //   console.log("heellloooooo");
       ws.send(JSON.stringify(data));
       ws.onmessage = (event) => {
         let newArr = [...global.messages];
         newArr.push(JSON.parse(event.data));
         setGlobal({ ...global, messages: newArr });
-      // };
+      };
     };
 
     event.preventDefault();

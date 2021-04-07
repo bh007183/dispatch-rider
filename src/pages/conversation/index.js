@@ -25,7 +25,7 @@ export default function Conversation() {
     data: [],
   });
 
-  const ws = new WebSocket("ws://dispatch-rider-back.herokuapp.com/test")
+  const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
     ws.onopen = function (event) {
         ws.send("hello");
         
@@ -36,6 +36,11 @@ export default function Conversation() {
   
   /////////////////////////////////////////////////////////////
   useEffect(() => {
+    const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
+    ws.onopen = function (event) {
+        console.log("heellloooooo")
+        
+      }
     axios
       .get(
         `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
@@ -79,6 +84,11 @@ export default function Conversation() {
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
+    const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
+    ws.onopen = function (event) {
+        console.log("heellloooooo")
+        
+      }
     
       ws.send(JSON.stringify(data));
       ws.onmessage = (event) => {

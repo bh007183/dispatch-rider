@@ -33,10 +33,11 @@ var ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/");
   /////////////////////////////////////////////////////////////
   useEffect(() => {
     
+
     
-    // ws.onopen = function (event) {
-    //   ws.send("Here's some text that the server is urgently awaiting!");
-    // };
+    ws.onopen = function (event) {
+      ws.send("Here's some text that the server is urgently awaiting!");
+    };
 
     axios
       .get(

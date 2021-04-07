@@ -25,14 +25,14 @@ export default function Conversation() {
     data: [],
   });
 
-  let ws; 
+  const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test"); 
   
 
   ///////////////////////////////////////////////////////////
 
   /////////////////////////////////////////////////////////////
   useEffect(() => {
-    ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test");
+    
     ws.onopen = function (event) {
       console.log("heellloooooo");
     };

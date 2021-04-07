@@ -78,19 +78,19 @@ export default function Conversation() {
     setSendMessage({ ...sendMessage, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     let data = {
       participants: global.participants,
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
     const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test")
-    ws.onopen = function (event) {
-        console.log("heellloooooo")
+    // await ws.onopen = function (event) {
+    //     console.log("heellloooooo")
         
-      }
+    //   }
     
-      ws.send(JSON.stringify(data));
+     await ws.send(JSON.stringify(data));
       ws.onmessage = (event) => {
         let newArr = [...global.messages];
         newArr.push(JSON.parse(event.data));

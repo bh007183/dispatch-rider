@@ -25,7 +25,7 @@ export default function Conversation() {
     data: [],
   });
 
-  const ws = new WebSocket("ws://localhost:8080/test")
+  const ws = new WebSocket("ws://dispatch-rider-back.herokuapp.com/test")
     ws.onopen = function (event) {
         ws.send("hello");
         

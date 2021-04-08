@@ -88,9 +88,13 @@ export default function Conversation() {
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-    wss.onopen = function(event) {
+    if(wss.readyState === 1){
       wss.send(JSON.stringify(data))
+    }else{
+      console.log("broken")
     }
+      
+    
    
     axios
       .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {

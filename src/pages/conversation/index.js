@@ -88,7 +88,10 @@ export default function Conversation() {
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-   wss.send(JSON.stringify(data))
+    wss.onopen = function(event) {
+      wss.send(JSON.stringify(data))
+    }
+   
     axios
       .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },

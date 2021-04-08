@@ -10,7 +10,7 @@ export default function AddToConversation() {
   const click = (event) => {
     
     axios.put(
-      "https://dispatch-rider-back.herokuapp.com/update/participants",
+      "http://localhost:8080/update/participants",
       { old: global.participants, new: event.currentTarget.attributes[1].value },
       {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
@@ -20,7 +20,7 @@ export default function AddToConversation() {
 
   useEffect(() => {
     axios
-      .get("https://dispatch-rider-back.herokuapp.com/friends", {
+      .get("http://localhost:8080/friends", {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) => setGlobal({ ...global, friends: res.data }));

@@ -28,7 +28,7 @@ export default function AddFriends() {
       console.log("blob");
     } else {
       axios
-        .get("https://dispatch-rider-back.herokuapp.com/friendSearch/" + findFriends.friendSearch)
+        .get("http://localhost:8080/friendSearch/" + findFriends.friendSearch)
         .then((res) =>
           setsearchResults({ ...searchResults, friendSearchResults: res.data })
         );
@@ -38,7 +38,7 @@ export default function AddFriends() {
   const searchHandler = () => {
     axios
       .get(
-        "http://https://dispatch-rider-back.herokuapp.com/friendSearch/exactsearch/" +
+        "http://http://localhost:8080/friendSearch/exactsearch/" +
           findFriends.friendSearch
       )
       .then((res) =>
@@ -49,7 +49,7 @@ export default function AddFriends() {
   const addFriend = (event) => {
     console.log(event.currentTarget.value);
     axios
-      .post("https://dispatch-rider-back.herokuapp.com/addFriend", {id: event.currentTarget.value}, {
+      .post("http://localhost:8080/addFriend", {id: event.currentTarget.value}, {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) =>

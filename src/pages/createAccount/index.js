@@ -24,7 +24,7 @@ export default function CreateAccount() {
 
   const handleSubmit = event => {
     if(newAccount.password === newAccount.initialPassword){
-        axios.post("https://dispatch-rider-back.herokuapp.com/api/create/account", newAccount)
+        axios.post("http://localhost:8080/api/create/account", newAccount)
         .then(res => 
             {
                 if(res.data.errors)

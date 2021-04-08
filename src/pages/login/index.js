@@ -26,12 +26,13 @@ export default function Login() {
 
  const handleSubmit = (event) => {
      event.preventDefault()
-     axios.post("http://localhost:8080/login", login)
+     axios.post("https://dispatch-rider-back.herokuapp.com/login", login)
      .then((res) => {
          localStorage.setItem("Auth", res.data.auth);
          localStorage.setItem("UserId", res.data.id);
         
         window.location.href = "/main"
+        console.log("what?")
         
          
     }).catch(err => alert("Invalid Authentication"))

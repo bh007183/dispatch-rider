@@ -12,14 +12,14 @@ export default function Main() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/conversation", {
+      .get("https://dispatch-rider-back.herokuapp.com/conversation", {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) => setGlobal({ ...global, conversations: res.data }));
   }, [global.conversations.length]);
   useEffect(() => {
     axios
-      .get("http://localhost:8080/friends", {
+      .get("https://dispatch-rider-back.herokuapp.com/friends", {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) => setGlobal({ ...global, friends: res.data }));

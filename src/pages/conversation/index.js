@@ -28,8 +28,11 @@ export default function Conversation() {
   
   const wss = new WebSocket("wss://dispatch-rider-back.herokuapp.com/bru");
   wss.onopen = function (event) {
+    console.log(event)
     
-    
+  };
+  wss.onclose = function (event) {
+    console.log("connection closed")
   };
   wss.onmessage = (event) => {
     let newArr = [...global.messages];
@@ -86,14 +89,17 @@ export default function Conversation() {
       author: localStorage.getItem("UserId"),
     };
    
-    // wss.onopen = function (event) {
-      // };
-    //   console.log("connected asdfasddafsasfas")
-      wss.send(JSON.stringify(data));
-      // wss.onmessage = (event) => {
-        // console.log("dang")
-        
-      // };
+   
+       if(wss.readyState === 1){
+        wss.send(JSON.stringify(data));
+       }else{
+         console.log("lost Connection")
+         const wss = new WebSocket("ws://localhost:8080/bru")
+        wss.onopen = function (event) {
+          wss.send(JSON.stringify(data));
+          };
+       }
+      
     
 
     axios

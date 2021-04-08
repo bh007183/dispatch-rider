@@ -32,7 +32,7 @@ export default function Login() {
          localStorage.setItem("UserId", res.data.id);
         
         window.location.href = "/main"
-        console.log("what?")
+        
         
          
     }).catch(err => alert("Invalid Authentication"))

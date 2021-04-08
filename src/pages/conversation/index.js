@@ -25,27 +25,27 @@ export default function Conversation() {
     data: [],
   });
 
-  // const ws = new WebSocket("wss://dispatch-rider-back.herokuapp.com/test");
-
-  // const ws = new WebSocket("ws://localhost:8080/test"); 
-  // ws.onopen = function (event) {
-    
-  //   ws.onmessage = (event) => {
-  //     console.log(event.data)
-  //   };
-    
-  // };
   
- 
+  const wss = new WebSocket("wss://dispatch-rider-back.herokuapp.com/bru");
+  wss.onopen = function (event) {
+    
+    
+  };
+  wss.onmessage = (event) => {
+    let newArr = [...global.messages];
+        newArr.push(JSON.parse(event.data));
+        setGlobal({ ...global, messages: newArr })
+  };
+
+  
+
   ///////////////////////////////////////////////////////////
 
   /////////////////////////////////////////////////////////////
   useEffect(() => {
-   
-    
     axios
       .get(
-        `http://localhost:8080/conversation/specific/${global.participants}`,
+        `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -61,7 +61,7 @@ export default function Conversation() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8080/groupconversation/specific/${global.participants}`,
+        `https://dispatch-rider-back.herokuapp.com/groupconversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -78,26 +78,26 @@ export default function Conversation() {
 
     setSendMessage({ ...sendMessage, [name]: value });
   };
-  
+
   const handleSubmit = (event) => {
     let data = {
       participants: global.participants,
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
-    const ws = new WebSocket("ws://localhost:8080/test"); 
-    ws.onopen = function (event) {
-      ws.send(JSON.stringify(data));
-      ws.onmessage = (event) => {
-        let newArr = [...global.messages];
-        newArr.push(JSON.parse(event.data));
-        setGlobal({ ...global, messages: newArr });
-      };
-    };
+   
+    // wss.onopen = function (event) {
+      // };
+    //   console.log("connected asdfasddafsasfas")
+      wss.send(JSON.stringify(data));
+      // wss.onmessage = (event) => {
+        // console.log("dang")
+        
+      // };
+    
 
-    event.preventDefault();
     axios
-      .post("http://localhost:8080/sendMessage", data, {
+      .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) => console.log(res))
@@ -111,7 +111,7 @@ export default function Conversation() {
   const deleteButton = (event) => {
     axios
       .delete(
-        "http://localhost:8080/deleteMessage/" +
+        "https://dispatch-rider-back.herokuapp.com/deleteMessage/" +
           event.currentTarget.attributes[3].value,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },

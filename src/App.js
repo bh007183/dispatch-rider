@@ -21,6 +21,7 @@ function App() {
     
   });
 
+
   const memo = useMemo(() => ({ global, setGlobal }), [global, setGlobal]);
   const state = useState(() => ({ global, setGlobal }), [global, setGlobal]);
 

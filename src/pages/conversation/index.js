@@ -28,7 +28,7 @@ wss.onmessage = (event) => {
   console.log(JSON.parse(event.data))
   // let newArr = [...global.messages];
   //     newArr.push(JSON.parse(event.data));
-      alert(event.data))
+      alert(event.data)
       // setGlobal({ ...global, messages: newArr })
 };
 

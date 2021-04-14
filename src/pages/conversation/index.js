@@ -10,7 +10,42 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import IconButton from "@material-ui/core/IconButton";
 
 
+
+
+const wss = new WebSocket(`wss://dispatch-rider-back.herokuapp.com/bru`)
+wss.onopen = function(event) {
+  console.log("open")
+}
+
+wss.onclose = function (event) {
+  console.log("connection closed")
+};
+wss.onerror = function (event) {
+  console.log(event)
+};
+// wss.onmessage = (event) => {
+//   console.log(JSON.parse(event.data))
+//   let newArr = [...global.messages];
+//       newArr.push(JSON.parse(event.data));
+//       setGlobal({ ...global, messages: newArr })
+// };
+
+
+if(wss.readyState === 1){
+    console.log("yay")
+  }else{
+    console.log("broken")
+  }
+
+
+
 export default function Conversation() {
+  wss.onmessage = (event) => {
+    console.log(JSON.parse(event.data))
+    let newArr = [...global.messages];
+        newArr.push(JSON.parse(event.data));
+        setGlobal({ ...global, messages: newArr })
+  };
   const { global, setGlobal } = useContext(GlobalContext);
 
   const messagesEndRef = useRef(null);
@@ -26,30 +61,7 @@ export default function Conversation() {
     data: [],
   });
 
-  const wss = new WebSocket(`ws://localhost:8080/bru/${global.participants}`)
-  wss.onopen = function(event) {
-    console.log("open")
-  }
-  
-  wss.onclose = function (event) {
-    console.log("connection closed")
-  };
-  wss.onerror = function (event) {
-    console.log(event)
-  };
-  wss.onmessage = (event) => {
-    console.log(event.data)
-    // let newArr = [...global.messages];
-    //     newArr.push(JSON.parse(event.data));
-    //     setGlobal({ ...global, messages: newArr })
-  };
 
-  if(wss.readyState === 1){
-      console.log("yay")
-    }else{
-      console.log("broken")
-    }
-  
 
   ///////////////////////////////////////////////////////////
 
@@ -57,7 +69,7 @@ export default function Conversation() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8080/conversation/specific/${global.participants}`,
+        `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -73,7 +85,7 @@ export default function Conversation() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8080/groupconversation/specific/${global.participants}`,
+        `https://dispatch-rider-back.herokuapp.com/groupconversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -97,12 +109,11 @@ export default function Conversation() {
       message: sendMessage.message,
       author: localStorage.getItem("UserId"),
     };
+
+    wss.send(JSON.stringify(data))
     
-      
-    
-   
     axios
-      .post("http://localhost:8080/sendMessage", data, {
+      .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) => console.log(res))
@@ -116,7 +127,7 @@ export default function Conversation() {
   const deleteButton = (event) => {
     axios
       .delete(
-        "http://localhost:8080/deleteMessage/" +
+        "https://dispatch-rider-back.herokuapp.com/deleteMessage/" +
           event.currentTarget.attributes[3].value,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },

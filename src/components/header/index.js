@@ -51,7 +51,7 @@ export default function Header() {
 
   const Unsubscribe = () => {
 
-    axios.put("http://localhost:8080/unsubscribe", global.participants, {
+    axios.put("https://dispatch-rider-back.herokuapp.com/unsubscribe", global.participants, {
       headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
     }).then(res => res.data === "Success" ? window.location.href = "/main" : alert("somthings amis"))
     .catch(err => console.log(err))

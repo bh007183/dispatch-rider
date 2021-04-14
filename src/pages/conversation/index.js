@@ -13,16 +13,17 @@ import IconButton from "@material-ui/core/IconButton";
 
 
 const wss = new WebSocket(`wss://dispatch-rider-back.herokuapp.com/bru`)
-wss.onopen = function(event) {
-  console.log("open")
-}
+// wss.onopen = function(event) {
+//   console.log("open")
+// }
 
-wss.onclose = function (event) {
-  console.log("connection closed")
-};
-wss.onerror = function (event) {
-  console.log(event)
-};
+
+// wss.onclose = function (event) {
+//   console.log("connection closed")
+// };
+// wss.onerror = function (event) {
+//   console.log(event)
+// };
 // wss.onmessage = (event) => {
 //   console.log(JSON.parse(event.data))
 //   let newArr = [...global.messages];
@@ -40,6 +41,16 @@ if(wss.readyState === 1){
 
 
 export default function Conversation() {
+  wss.onopen = function(event) {
+    console.log("open")
+  }
+  
+  wss.onclose = function (event) {
+    console.log("connection closed")
+  };
+  wss.onerror = function (event) {
+    console.log(event)
+  };
   wss.onmessage = (event) => {
     console.log(JSON.parse(event.data))
     let newArr = [...global.messages];

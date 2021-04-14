@@ -46,7 +46,7 @@ export default function Conversation() {
   }
   
   wss.onclose = function (event) {
-    console.log("connection closed")
+    console.log(`connection closed ${event}`)
   };
   wss.onerror = function (event) {
     console.log(event)

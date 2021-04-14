@@ -15,6 +15,9 @@ import IconButton from "@material-ui/core/IconButton";
 const wss = new WebSocket(`wss://dispatch-rider-back.herokuapp.com/bru`)
 wss.onopen = function(event) {
   console.log("open")
+  setInterval(() => {
+    wss.send(JSON.stringify(1))
+  }, 30000);
 }
 
 
@@ -25,10 +28,14 @@ wss.onerror = function (event) {
   console.log(event)
 };
 wss.onmessage = (event) => {
-  console.log(JSON.parse(event.data))
+  if(JSON.parse(event.data)!== 1){
+    alert(event.data)
+  }else{
+    console.log(event.data)
+  }
   // let newArr = [...global.messages];
   //     newArr.push(JSON.parse(event.data));
-      alert(event.data)
+      
       // setGlobal({ ...global, messages: newArr })
 };
 

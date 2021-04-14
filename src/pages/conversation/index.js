@@ -12,52 +12,37 @@ import IconButton from "@material-ui/core/IconButton";
 
 
 
-// const wss = new WebSocket(`ws://localhost:8080/bru`)
-// wss.onopen = function(event) {
-//   console.log("open")
-// }
+const wss = new WebSocket(`wss://dispatch-rider-back.herokuapp.com/bru`)
+wss.onopen = function(event) {
+  console.log("open")
+}
 
 
-// wss.onclose = function (event) {
-//   console.log("connection closed")
-// };
-// wss.onerror = function (event) {
-//   console.log(event)
-// };
-// wss.onmessage = (event) => {
-//   console.log(JSON.parse(event.data))
-//   let newArr = [...global.messages];
-//       newArr.push(JSON.parse(event.data));
-//       setGlobal({ ...global, messages: newArr })
-// };
+wss.onclose = function (event) {
+  console.log("connection closed")
+};
+wss.onerror = function (event) {
+  console.log(event)
+};
+wss.onmessage = (event) => {
+  console.log(JSON.parse(event.data))
+  let newArr = [...global.messages];
+      newArr.push(JSON.parse(event.data));
+      alert(newArr)
+      // setGlobal({ ...global, messages: newArr })
+};
 
 
-// if(wss.readyState === 1){
-//     console.log("yay")
-//   }else{
-//     console.log("broken")
-//   }
+if(wss.readyState === 1){
+    console.log("yay")
+  }else{
+    console.log("broken")
+  }
 
 
 
 export default function Conversation() {
-  const wss = new WebSocket(`wss://dispatch-rider-back.herokuapp.com/bru`)
-  wss.onopen = function(event) {
-    console.log("open")
-  }
-  
-  wss.onclose = function (event) {
-    console.log(`connection closed ${event}`)
-  };
-  wss.onerror = function (event) {
-    console.log(event)
-  };
-  wss.onmessage = (event) => {
-    console.log(JSON.parse(event.data))
-    let newArr = [...global.messages];
-        newArr.push(JSON.parse(event.data));
-        setGlobal({ ...global, messages: newArr })
-  };
+
   const { global, setGlobal } = useContext(GlobalContext);
 
   const messagesEndRef = useRef(null);

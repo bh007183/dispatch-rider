@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 
 
-const wss = new WebSocket(`wss://dispatch-rider-back.herokuapp.com/bru`)
+const wss = new WebSocket(`ws://localhost:8080/bru`)
 wss.onopen = function(event) {
   console.log("open")
   setInterval(() => {
@@ -73,7 +73,7 @@ export default function Conversation() {
   useEffect(() => {
     axios
       .get(
-        `https://dispatch-rider-back.herokuapp.com/conversation/specific/${global.participants}`,
+        `http://localhost:8080/conversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -89,7 +89,7 @@ export default function Conversation() {
   useEffect(() => {
     axios
       .get(
-        `https://dispatch-rider-back.herokuapp.com/groupconversation/specific/${global.participants}`,
+        `http://localhost:8080/groupconversation/specific/${global.participants}`,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
         }
@@ -117,7 +117,7 @@ export default function Conversation() {
     wss.send(JSON.stringify(data))
     
     axios
-      .post("https://dispatch-rider-back.herokuapp.com/sendMessage", data, {
+      .post("http://localhost:8080/sendMessage", data, {
         headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
       })
       .then((res) => console.log(res))
@@ -131,7 +131,7 @@ export default function Conversation() {
   const deleteButton = (event) => {
     axios
       .delete(
-        "https://dispatch-rider-back.herokuapp.com/deleteMessage/" +
+        "http://localhost:8080/deleteMessage/" +
           event.currentTarget.attributes[3].value,
         {
           headers: { authorization: "Bearer: " + localStorage.getItem("Auth") },
